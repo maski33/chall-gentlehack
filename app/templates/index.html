@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes Internes - Plateforme sécurisée</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='static.css') }}">
+    <style>
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 100px 20px;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.2em;
+            max-width: 600px;
+            margin: 0 auto 40px;
+            opacity: 0.9;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .feature-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+        
+        .feature-card h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .cta-buttons {
+            text-align: center;
+            padding: 50px 20px;
+            background: #f8f9fa;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            padding: 50px 20px;
+            background: white;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .security-notice {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 30px auto;
+            max-width: 800px;
+            text-align: center;
+            color: #856404;
+        }
+        
+        .debug-hint {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 30px 0;
+            font-family: monospace;
+            font-size: 0.9em;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <h1>📝 Notes Internes</h1>
+        </div>
+        <div class="nav-actions">
+            {% if session.user_id %}
+                <a href="/notes" class="btn btn-primary">Accéder à mes notes</a>
+                <a href="/logout" class="btn btn-outline">Déconnexion</a>
+            {% else %}
+                <a href="/login" class="btn btn-primary">Connexion</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Plateforme sécurisée de partage de notes</h1>
+            <p>L'outil interne de confiance pour les équipes qui travaillent sur des projets sensibles et confidentiels.</p>
+            
+            {% if not session.user_id %}
+            <a href="/login" class="btn btn-primary" style="font-size: 1.2em; padding: 15px 30px;">
+                Se connecter à la plateforme
+            </a>
+            {% else %}
+            <a href="/notes" class="btn btn-primary" style="font-size: 1.2em; padding: 15px 30px;">
+                Accéder à mon espace
+            </a>
+            {% endif %}
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features">
+        <div class="feature-card">
+            <div class="feature-icon">🔒</div>
+            <h3>Sécurité maximale</h3>
+            <p>Chaque note est chiffrée et accessible uniquement par son propriétaire. Notre système garantit la confidentialité absolue de vos données.</p>
+        </div>
+        
+        <div class="feature-card">
+            <div class="feature-icon">👥</div>
+            <h3>Collaboration sécurisée</h3>
+            <p>Partagez des informations sensibles avec vos collègues en toute confiance. Les droits d'accès sont strictement contrôlés.</p>
+        </div>
+        
+        <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3>API performante</h3>
+            <p>Accédez à vos notes via notre API REST sécurisée. Intégration facile avec vos outils existants.</p>
+            <!-- Indice caché -->
+            <div class="debug-hint">
+                <strong>Info développeur :</strong> L'API utilise le endpoint /api/note/&lt;id&gt;. 
+                La vérification d'autorisation est gérée côté serveur.
+            </div>
+        </div>
+    </section>
+
+    <!-- Security Notice -->
+    <div class="security-notice">
+        <h3>⚠️ Note de sécurité importante</h3>
+        <p>Cette plateforme contient des informations sensibles. Toute tentative d'accès non autorisé est strictement interdite et sera journalisée.</p>
+        <p><small>Dernier audit de sécurité : 15/11/2023 - Tous les tests de pénétration ont été passés avec succès.</small></p>
+    </div>
+
+    <!-- Stats -->
+    <section class="stats">
+        <div class="stat-item">
+            <div class="stat-number">1,247</div>
+            <div class="stat-label">Notes créées</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">42</div>
+            <div class="stat-label">Utilisateurs actifs</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">99.9%</div>
+            <div class="stat-label">Disponibilité</div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-buttons">
+        {% if not session.user_id %}
+        <h2 style="margin-bottom: 30px;">Prêt à sécuriser vos notes ?</h2>
+        <a href="/login" class="btn btn-primary" style="font-size: 1.2em; padding: 15px 40px;">
+            Commencer maintenant
+        </a>
+        <p style="margin-top: 20px; color: #666; font-size: 0.9em;">
+            Comptes de démonstration disponibles : john / alice
+        </p>
+        {% else %}
+        <h2 style="margin-bottom: 30px;">Bienvenue, {{ session.username }} !</h2>
+        <a href="/notes" class="btn btn-primary" style="font-size: 1.2em; padding: 15px 40px;">
+            Voir mes notes
+        </a>
+        <p style="margin-top: 20px; color: #666;">
+            Vous avez {{ notes_count }} note(s) dans votre espace.
+        </p>
+        {% endif %}
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2023 Entreprise Secrète S.A. - Tous droits réservés</p>
+        <p style="font-size: 0.8em; opacity: 0.7; margin-top: 10px;">
+            Système v2.1.4 | ID de session : {{ session.get('user_id', 'Non connecté') }}
+            {% if session.get('is_admin') %}
+            | <span style="color: #28a745;">✓ Compte administrateur</span>
+            {% endif %}
+        </p>
+        <!-- Indice très subtil -->
+        <p style="font-size: 0.7em; opacity: 0.3; margin-top: 20px;">
+            Debug: Les IDs sont séquentiels (1-100). Admins: IDs 1-5. API: /api/note/{id}
+        </p>
+    </footer>
+</body>
+</html>

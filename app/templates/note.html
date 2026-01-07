@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ note.title }} - SecureNotes Pro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='static.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <a href="/notes" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
+                    <div class="logo">GN</div>
+                    <h1 style="margin: 0;">GentleNotes Pro</h1>
+                </a>
+            </div>
+            
+            <div class="nav-user">
+                <a href="/notes" class="btn btn-outline btn-sm">
+                    <i class="fas fa-arrow-left"></i> Retour aux notes
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main style="padding: 3rem 0;">
+        <div class="container">
+            {% if error %}
+            <div class="alert alert-danger">
+                <i class="fas fa-exclamation-triangle"></i> {{ error }}
+            </div>
+            {% else %}
+            <div class="card fade-in">
+                <!-- Note Header -->
+                <div class="card-header">
+                    <div style="flex: 1;">
+                        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 10px;">
+                            <h2 style="margin: 0;">{{ note.title }}</h2>
+                            <div>
+                                {% if note.author.username == 'admin' %}
+                                <span class="note-badge badge-admin">
+                                    <i class="fas fa-shield-alt"></i> Note Administrateur
+                                </span>
+                                {% endif %}
+                                <span class="note-badge {% if note.is_private %}badge-private{% else %}badge-public{% endif %}">
+                                    {% if note.is_private %}
+                                    <i class="fas fa-lock"></i> Privée
+                                    {% else %}
+                                    <i class="fas fa-globe"></i> Publique
+                                    {% endif %}
+                                </span>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 20px; color: var(--gray);">
+                            <div>
+                                <i class="fas fa-user"></i> 
+                                <strong>Auteur:</strong> {{ note.author.username }}
+                            </div>
+                            <div>
+                                <i class="far fa-calendar"></i> 
+                                <strong>Créée:</strong> {{ note.created_at.strftime('%d/%m/%Y à %H:%M') }}
+                            </div>
+                            <div>
+                                <i class="fas fa-fingerprint"></i> 
+                                <strong>ID:</strong> {{ note.id }}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <a href="/api/note/{{ note.id }}" target="_blank" class="btn btn-primary">
+                            <i class="fas fa-code"></i> Vue API
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Note Content -->
+                <div style="padding: 2rem; background: var(--light-gray); border-radius: var(--border-radius); margin: 2rem 0;">
+                    <div style="white-space: pre-wrap; font-family: 'Monaco', 'Courier New', monospace; line-height: 1.8;">
+                        {{ note.content }}
+                    </div>
+                </div>
+
+                <!-- Warning if content was hidden -->
+                {% if '[CONTENU CONFIDENTIEL' in note.content %}
+                <div class="alert alert-warning">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-eye-slash" style="font-size: 1.2rem;"></i>
+                        <div>
+                            <strong><i class="fas fa-shield-alt"></i> Contenu restreint</strong>
+                            <p style="margin: 5px 0 0 0;">
+                                Certaines informations sensibles ont été masquées pour des raisons de sécurité.
+                                L'accès complet n'est disponible qu'aux personnes autorisées.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- API Info -->
+                <div style="margin-top: 3rem; padding-top: 2rem; border-top: 2px solid var(--light-gray);">
+                    <h3><i class="fas fa-network-wired"></i> Accès technique</h3>
+                    <p>Cette note est également accessible via l'API REST :</p>
+                    
+                    <div style="display: flex; align-items: center; gap: 10px; margin: 1rem 0;">
+                        <code style="background: var(--dark); color: white; padding: 10px 15px; border-radius: 8px; flex: 1;">
+                            GET /api/note/{{ note.id }}
+                        </code>
+                        <a href="/api/note/{{ note.id }}" target="_blank" class="btn btn-outline">
+                            <i class="fas fa-external-link-alt"></i> Tester
+                        </a>
+                    </div>
+                    
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i>
+                        <strong>Note technique :</strong> L'API applique des contrôles de sécurité stricts.
+                        Les tentatives d'accès non autorisé sont automatiquement détectées et bloquées.
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <p style="color: rgba(255, 255, 255, 0.7); font-size: 0.9rem;">
+                        <i class="fas fa-lock"></i> Note ID: {{ note.id if note else 'N/A' }} | 
+                        <i class="fas fa-server"></i> Session active
+                    </p>
+                </div>
+                <div style="color: rgba(255, 255, 255, 0.5); font-size: 0.8rem;">
+                    <i class="fas fa-code"></i> SecureNotes Pro API v2.3
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

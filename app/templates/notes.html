@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes Notes - SecureNotes Pro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='static.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <div class="logo">GN</div>
+                <h1>GentleNotes Pro</h1>
+            </div>
+            
+            <div class="nav-user">
+                <div class="user-info">
+                    <div class="user-avatar">{{ username[0]|upper }}</div>
+                    <div>
+                        <strong>{{ username }}</strong><br>
+                        <small style="color: var(--gray);">Connecté</small>
+                    </div>
+                </div>
+                <a href="/logout" class="btn btn-outline btn-sm">
+                    <i class="fas fa-sign-out-alt"></i> Déconnexion
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="notes-page">
+        <div class="container">
+            <!-- Page Header -->
+            <div class="page-header fade-in">
+                <h2><i class="fas fa-sticky-note"></i> Mes Notes</h2>
+                <p class="subtitle">
+                    Gérer vos notes personnelles et accéder aux informations partagées
+                </p>
+            </div>
+
+            <!-- Notes Grid -->
+            <div class="notes-grid fade-in">
+                {% if notes %}
+                    {% for note in notes %}
+                    <div class="note-card {% if note.author.username == 'admin' %}admin-note{% endif %}">
+                        <div class="note-header">
+                            <h3 class="note-title">{{ note.title }}</h3>
+                            <div>
+                                {% if note.author.username == 'admin' %}
+                                <span class="note-badge badge-admin">
+                                    <i class="fas fa-shield-alt"></i> Admin
+                                </span>
+                                {% endif %}
+                                <span class="note-badge {% if note.is_private %}badge-private{% else %}badge-public{% endif %}">
+                                    {% if note.is_private %}
+                                    <i class="fas fa-lock"></i> Privée
+                                    {% else %}
+                                    <i class="fas fa-globe"></i> Publique
+                                    {% endif %}
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="note-content">
+                            {{ note.content|truncate(150) }}
+                        </div>
+                        
+                        <div class="note-meta">
+                            <div class="note-date">
+                                <i class="far fa-calendar"></i>
+                                {{ note.created_at.strftime('%d/%m/%Y') }}
+                            </div>
+                            <div class="note-actions">
+                                <a href="/note/{{ note.id }}" class="btn btn-primary btn-sm">
+                                    <i class="fas fa-eye"></i> Voir
+                                </a>
+                                <span style="color: var(--gray); font-size: 0.9rem;">
+                                    ID: {{ note.id }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                <div class="empty-state" style="grid-column: 1 / -1;">
+                    <div class="empty-icon">
+                        <i class="far fa-sticky-note"></i>
+                    </div>
+                    <h3>Aucune note</h3>
+                    <p>Vous n'avez pas encore créé de notes.</p>
+                    <p class="mt-2" style="color: var(--gray);">
+                        Les notes partagées avec vous apparaîtront ici.
+                    </p>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- API Section -->
+            <div class="api-section fade-in">
+                <div class="api-header">
+                    <div class="api-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div>
+                        <h3><i class="fas fa-plug"></i> Interface API</h3>
+                        <p>Accédez à vos notes via notre API REST sécurisée</p>
+                    </div>
+                </div>
+                
+                <div class="api-endpoints">
+                    <div class="api-endpoint">
+                        <span class="endpoint-method get">GET</span>
+                        <div class="endpoint-path">/api/note/&lt;id&gt;</div>
+                        <p class="endpoint-desc">
+                            Récupère une note spécifique par son ID.
+                            <br><small class="mt-1" style="color: var(--warning);">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                Vérification d'autorisation activée
+                            </small>
+                        </p>
+                        <div class="mt-2">
+                            <a href="/api/note/1" target="_blank" class="btn btn-outline btn-sm">
+                                <i class="fas fa-external-link-alt"></i> Tester note 1
+                            </a>
+                            <a href="/api/note/2" target="_blank" class="btn btn-outline btn-sm">
+                                <i class="fas fa-external-link-alt"></i> Tester note 2
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="api-endpoint">
+                        <span class="endpoint-method get">GET</span>
+                        <div class="endpoint-path">/debug</div>
+                        <p class="endpoint-desc">
+                            Informations de débogage et statistiques système.
+                            <br><small class="mt-1" style="color: var(--gray);">
+                                <i class="fas fa-info-circle"></i>
+                                Utile pour le développement
+                            </small>
+                        </p>
+                        <div class="mt-2">
+                            <a href="/debug" target="_blank" class="btn btn-outline btn-sm">
+                                <i class="fas fa-bug"></i> Voir les infos debug
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Fausse note de sécurité -->
+                <div class="alert alert-info mt-3">
+                    <div style="display: flex; align-items: start; gap: 10px;">
+                        <i class="fas fa-shield-check" style="font-size: 1.2rem;"></i>
+                        <div>
+                            <strong><i class="fas fa-check-circle"></i> Système sécurisé</strong>
+                            <p style="margin: 5px 0 0 0; font-size: 0.95rem;">
+                                La protection contre les IDOR (Insecure Direct Object Reference) a été implémentée.
+                                Les accès non autorisés aux notes sont automatiquement bloqués et journalisés.
+                            </p>
+                            <p style="margin: 5px 0 0 0; font-size: 0.9rem; color: var(--gray);">
+                                <i class="fas fa-clock"></i> Dernier audit: 15/11/2023 | 
+                                <i class="fas fa-file-shield"></i> Certifié ISO 27001
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                        <div class="logo" style="width: 30px; height: 30px; font-size: 0.9rem;">SN</div>
+                        <strong>SecureNotes Pro v2.3</strong>
+                    </div>
+                    <p style="color: rgba(255, 255, 255, 0.7); font-size: 0.9rem;">
+                        <i class="far fa-copyright"></i> 2023 Entreprise Sécurisée SA
+                    </p>
+                </div>
+                <div class="footer-links">
+                    <a href="#" class="footer-link">
+                        <i class="fas fa-lock"></i> Politique de sécurité
+                    </a>
+                    <a href="#" class="footer-link">
+                        <i class="fas fa-question-circle"></i> Support
+                    </a>
+                    <a href="/debug" class="footer-link">
+                        <i class="fas fa-cog"></i> Debug
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Message de debug caché dans la console
+        console.log('%c🔧 Mode développeur SecureNotes Pro', 'color: #4361ee; font-size: 16px; font-weight: bold;');
+        console.log('ℹ️  API Endpoints disponibles:');
+        console.log('  - GET /api/note/:id → Récupère une note');
+        console.log('  - GET /debug → Informations système');
+        console.log('\n⚠️  Attention: Les accès sont strictement contrôlés.');
+        console.log('   La vérification des permissions est activée sur tous les endpoints.');
+        
+        // Animation au scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in');
+                    }
+                });
+            }, observerOptions);
+            
+            document.querySelectorAll('.note-card, .api-endpoint').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
