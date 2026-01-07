@@ -1,0 +1,10 @@
+services:
+  web:
+    build: .
+    ports:
+      - "8081:8081"
+    environment:
+      - FLAG=GENTLE{ID0R_1n_Th3_AP1_P4r4m3t3r}
+      - ADMIN_SECRET=admin123
+    volumes:
+      - ./app:/app

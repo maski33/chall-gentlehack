@@ -1,0 +1,19 @@
+FROM python:3.9-slim
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y \
+    sqlite3 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copier requirements d'abord pour mieux utiliser le cache
+COPY app/requirements.txt .
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copier toute l'application
+COPY app/ .
+
+EXPOSE 8081
+
+CMD ["python", "app.py"]
