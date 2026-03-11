@@ -10,12 +10,8 @@ Vous venez d'être embauché comme stagiaire dans une entreprise qui utilise une
 ### Option 1 : Docker (recommandé)
 ```bash
 # Cloner le dépôt
-git clone <repo>
-cd idor-challenge
+git clone https://github.com/maski33/chall-gentlehack.git
+cd chall-gentlehack
 
 # Lancer avec Docker Compose
-docker-compose up --build
-
-# Ou avec Docker directement
-docker build -t idor-challenge .
-docker run -p 8080:8080 -e FLAG=GENTLE{ID0R_1n_Th3_AP1_P4r4m3t3r} idor-challenge
+docker-compose up
