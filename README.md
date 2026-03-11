@@ -1,9 +1,7 @@
 # Challenge CTF : Notes Internes - IDOR
 
 ## Description
-Vous avez obtenu un accès à la plateforme de notes internes d'une entreprise. 
-En tant qu'employé normal, vous ne devriez pouvoir voir que vos propres notes... 
-mais peut-être que le système a une faille ?
+Vous venez d'être embauché comme stagiaire dans une entreprise qui utilise une plateforme interne de notes. Votre manager vous a donné des identifiants pour accéder au système, mais vous soupçonnez que certaines notes confidentielles pourraient être mal protégées...
 
 **Format du flag :** `GENTLE{...}`
 

@@ -26,7 +26,7 @@ body {
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     min-height: 100vh;
-    color: var(--dark);
+    color: white;  /* MODIFIÉ: de var(--dark) à white */
     line-height: 1.6;
 }
 
@@ -47,12 +47,12 @@ h1 {
 
 h2 {
     font-size: 2rem;
-    color: var(--dark);
+    color: white;  /* MODIFIÉ: de var(--dark) à white */
 }
 
 h3 {
     font-size: 1.5rem;
-    color: var(--primary);
+    color: white;  /* MODIFIÉ: de var(--primary) à white */
 }
 
 /* ===== LAYOUT COMPONENTS ===== */
@@ -60,6 +60,7 @@ h3 {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
+    color: white;  /* AJOUTÉ */
 }
 
 /* ===== NAVBAR ===== */
@@ -78,6 +79,7 @@ h3 {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    color: var(--dark);  /* GARDÉ car fond blanc */
 }
 
 .nav-brand {
@@ -108,6 +110,7 @@ h3 {
     display: flex;
     align-items: center;
     gap: 15px;
+    color: var(--dark);  /* GARDÉ car fond blanc */
 }
 
 .user-info {
@@ -117,6 +120,7 @@ h3 {
     background: var(--light-gray);
     padding: 8px 15px;
     border-radius: 50px;
+    color: var(--dark);  /* GARDÉ car fond clair */
 }
 
 .user-avatar {
@@ -147,6 +151,7 @@ h3 {
     text-decoration: none;
     height: 44px;
     min-width: 120px;
+    color: white;  /* AJOUTÉ */
 }
 
 .btn-primary {
@@ -161,13 +166,14 @@ h3 {
 
 .btn-outline {
     background: transparent;
-    border: 2px solid var(--primary);
-    color: var(--primary);
+    border: 2px solid white;  /* MODIFIÉ: de var(--primary) à white */
+    color: white;  /* MODIFIÉ: de var(--primary) à white */
 }
 
 .btn-outline:hover {
     background: var(--primary);
     color: white;
+    border-color: var(--primary);
 }
 
 .btn-danger {
@@ -196,16 +202,19 @@ h3 {
     margin-top: 10px;
     font-size: 1rem;
     padding: 12px;
+    color: white;  /* AJOUTÉ */
 }
 
 /* ===== CARD COMPONENTS ===== */
 .card {
-    background: white;
+    background: rgba(255, 255, 255, 0.1);  /* MODIFIÉ: de white à transparent */
+    backdrop-filter: blur(10px);
     border-radius: var(--border-radius);
     padding: 2rem;
     box-shadow: var(--box-shadow);
     transition: var(--transition);
-    border: 1px solid rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);  /* MODIFIÉ */
+    color: white;  /* AJOUTÉ */
 }
 
 .card:hover {
@@ -219,7 +228,8 @@ h3 {
     align-items: start;
     margin-bottom: 1.5rem;
     padding-bottom: 1rem;
-    border-bottom: 2px solid var(--light-gray);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);  /* MODIFIÉ */
+    color: white;  /* AJOUTÉ */
 }
 
 /* ===== LOGIN PAGE ===== */
@@ -238,11 +248,14 @@ h3 {
 }
 
 .login-card {
-    background: white;
+    background: rgba(255, 255, 255, 0.1);  /* MODIFIÉ: de white à transparent */
+    backdrop-filter: blur(10px);
     border-radius: var(--border-radius);
     padding: 2.5rem;
     box-shadow: var(--box-shadow-hover);
     text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.2);  /* AJOUTÉ */
+    color: white;  /* AJOUTÉ */
 }
 
 .login-icon {
@@ -262,43 +275,52 @@ h3 {
 .form-group {
     margin-bottom: 1.2rem;
     text-align: left;
+    color: white;  /* AJOUTÉ */
 }
 
 .form-label {
     display: block;
     margin-bottom: 0.5rem;
     font-weight: 600;
-    color: var(--dark);
+    color: white;  /* MODIFIÉ: de var(--dark) à white */
 }
 
 .form-control {
     width: 100%;
     padding: 12px 14px;
-    border: 2px solid var(--light-gray);
+    border: 2px solid rgba(255, 255, 255, 0.3);  /* MODIFIÉ */
     border-radius: var(--border-radius);
     font-size: 1rem;
     transition: var(--transition);
+    background: rgba(255, 255, 255, 0.1);  /* AJOUTÉ */
+    color: white;  /* AJOUTÉ */
 }
 
 .form-control:focus {
     outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+    border-color: white;  /* MODIFIÉ: de var(--primary) à white */
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);  /* MODIFIÉ */
+}
+
+.form-control::placeholder {
+    color: rgba(255, 255, 255, 0.5);  /* AJOUTÉ */
 }
 
 /* ===== NOTES PAGE ===== */
 .notes-page {
     padding: 3rem 0;
     min-height: calc(100vh - 76px);
+    color: white;  /* AJOUTÉ */
 }
 
 .page-header {
     text-align: center;
     margin-bottom: 3rem;
+    color: white;  /* AJOUTÉ */
 }
 
 .page-header .subtitle {
-    color: var(--gray);
+    color: rgba(255, 255, 255, 0.9);  /* MODIFIÉ: de var(--gray) à blanc transparent */
     font-size: 1.1rem;
     max-width: 600px;
     margin: 0 auto;
@@ -313,25 +335,29 @@ h3 {
 }
 
 .note-card {
-    background: white;
+    background: rgba(255, 255, 255, 0.1);  /* MODIFIÉ: de white à transparent */
+    backdrop-filter: blur(10px);
     border-radius: var(--border-radius);
     padding: 1.5rem;
     box-shadow: var(--box-shadow);
     transition: var(--transition);
     border-left: 4px solid var(--primary);
+    border: 1px solid rgba(255, 255, 255, 0.2);  /* AJOUTÉ */
     height: 100%;
     display: flex;
     flex-direction: column;
+    color: white;  /* AJOUTÉ */
 }
 
 .note-card:hover {
     transform: translateY(-5px);
     box-shadow: var(--box-shadow-hover);
+    background: rgba(255, 255, 255, 0.15);  /* AJOUTÉ */
 }
 
 .note-card.admin-note {
     border-left-color: var(--secondary);
-    background: linear-gradient(to right, rgba(114, 9, 183, 0.03), white);
+    background: rgba(114, 9, 183, 0.2);  /* MODIFIÉ */
 }
 
 .note-header {
@@ -339,23 +365,25 @@ h3 {
     justify-content: space-between;
     align-items: start;
     margin-bottom: 1rem;
+    color: white;  /* AJOUTÉ */
 }
 
 .note-title {
     font-size: 1.3rem;
     font-weight: 600;
-    color: var(--dark);
+    color: white;  /* MODIFIÉ: de var(--dark) à white */
     margin: 0;
     flex: 1;
 }
 
 .note-badge {
-    background: var(--light-gray);
+    background: rgba(0, 0, 0, 0.3);  /* MODIFIÉ */
     padding: 4px 12px;
     border-radius: 20px;
     font-size: 0.8rem;
     font-weight: 600;
     margin-left: 10px;
+    color: white;  /* AJOUTÉ */
 }
 
 .badge-admin {
@@ -374,7 +402,7 @@ h3 {
 }
 
 .note-content {
-    color: var(--gray);
+    color: rgba(255, 255, 255, 0.8);  /* MODIFIÉ: de var(--gray) à blanc transparent */
     line-height: 1.6;
     margin-bottom: 1.5rem;
     flex: 1;
@@ -391,15 +419,16 @@ h3 {
     align-items: center;
     margin-top: auto;
     padding-top: 1rem;
-    border-top: 1px solid var(--light-gray);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);  /* MODIFIÉ */
     font-size: 0.9rem;
-    color: var(--gray);
+    color: rgba(255, 255, 255, 0.7);  /* MODIFIÉ: de var(--gray) à blanc transparent */
 }
 
 .note-date {
     display: flex;
     align-items: center;
     gap: 5px;
+    color: rgba(255, 255, 255, 0.7);  /* AJOUTÉ */
 }
 
 .note-actions {
@@ -411,9 +440,11 @@ h3 {
 .api-section {
     margin-top: 4rem;
     padding: 2rem;
-    background: linear-gradient(135deg, rgba(67, 97, 238, 0.05), rgba(114, 9, 183, 0.05));
+    background: rgba(0, 0, 0, 0.2);  /* MODIFIÉ */
+    backdrop-filter: blur(10px);
     border-radius: var(--border-radius);
-    border: 1px solid rgba(67, 97, 238, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);  /* MODIFIÉ */
+    color: white;  /* AJOUTÉ */
 }
 
 .api-header {
@@ -421,6 +452,7 @@ h3 {
     align-items: center;
     gap: 15px;
     margin-bottom: 1.5rem;
+    color: white;  /* AJOUTÉ */
 }
 
 .api-icon {
@@ -442,10 +474,11 @@ h3 {
 }
 
 .api-endpoint {
-    background: white;
+    background: rgba(255, 255, 255, 0.1);  /* MODIFIÉ: de white à transparent */
     padding: 1.5rem;
     border-radius: var(--border-radius);
-    border: 1px solid var(--light-gray);
+    border: 1px solid rgba(255, 255, 255, 0.2);  /* MODIFIÉ */
+    color: white;  /* AJOUTÉ */
 }
 
 .endpoint-method {
@@ -469,16 +502,17 @@ h3 {
 
 .endpoint-path {
     font-family: 'Courier New', monospace;
-    background: var(--light-gray);
+    background: rgba(0, 0, 0, 0.3);  /* MODIFIÉ */
     padding: 10px;
     border-radius: 8px;
     margin: 10px 0;
     font-size: 0.95rem;
     word-break: break-all;
+    color: #ffd700;  /* MODIFIÉ: en jaune pour contraster */
 }
 
 .endpoint-desc {
-    color: var(--gray);
+    color: rgba(255, 255, 255, 0.8);  /* MODIFIÉ: de var(--gray) à blanc transparent */
     font-size: 0.95rem;
 }
 
@@ -486,21 +520,23 @@ h3 {
 .empty-state {
     text-align: center;
     padding: 4rem 2rem;
-    background: white;
+    background: rgba(255, 255, 255, 0.1);  /* MODIFIÉ: de white à transparent */
+    backdrop-filter: blur(10px);
     border-radius: var(--border-radius);
-    border: 2px dashed var(--light-gray);
+    border: 2px dashed rgba(255, 255, 255, 0.3);  /* MODIFIÉ */
+    color: white;  /* AJOUTÉ */
 }
 
 .empty-icon {
     width: 80px;
     height: 80px;
-    background: var(--light-gray);
+    background: rgba(255, 255, 255, 0.2);  /* MODIFIÉ */
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0 auto 1.5rem;
-    color: var(--gray);
+    color: white;  /* MODIFIÉ: de var(--gray) à white */
     font-size: 2rem;
 }
 
@@ -510,44 +546,46 @@ h3 {
     border-radius: var(--border-radius);
     margin-bottom: 1.5rem;
     border-left: 4px solid;
+    background: rgba(0, 0, 0, 0.3);  /* AJOUTÉ */
+    backdrop-filter: blur(10px);
+    color: white;  /* MODIFIÉ */
 }
 
 .alert-success {
-    background: rgba(76, 201, 240, 0.1);
     border-color: var(--success);
-    color: #0c5460;
+    color: white;  /* MODIFIÉ */
 }
 
 .alert-warning {
-    background: rgba(248, 150, 30, 0.1);
     border-color: var(--warning);
-    color: #856404;
+    color: white;  /* MODIFIÉ */
 }
 
 .alert-danger {
-    background: rgba(247, 37, 133, 0.1);
     border-color: var(--danger);
-    color: #721c24;
+    color: white;  /* MODIFIÉ */
 }
 
 .alert-info {
-    background: rgba(67, 97, 238, 0.1);
     border-color: var(--primary);
-    color: #004085;
+    color: white;  /* MODIFIÉ */
 }
 
 /* ===== FOOTER ===== */
 .footer {
-    background: var(--dark);
+    background: rgba(0, 0, 0, 0.5);  /* MODIFIÉ: plus transparent */
+    backdrop-filter: blur(10px);
     color: white;
     padding: 2rem 0;
     margin-top: 4rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);  /* AJOUTÉ */
 }
 
 .footer-content {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    color: white;  /* AJOUTÉ */
 }
 
 .footer-links {
@@ -556,7 +594,7 @@ h3 {
 }
 
 .footer-link {
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.8);  /* MODIFIÉ */
     text-decoration: none;
     transition: var(--transition);
 }
@@ -645,6 +683,7 @@ h3 {
 /* ===== UTILITIES ===== */
 .text-center {
     text-align: center;
+    color: white;  /* AJOUTÉ */
 }
 
 .mt-1 { margin-top: 1rem; }
@@ -661,16 +700,19 @@ h3 {
 /* ===== LOGIN FORM SPECIFIC ===== */
 .login-form {
     margin-top: 1.5rem;
+    color: white;  /* AJOUTÉ */
 }
 
 .login-btn-container {
     margin-top: 1.5rem;
+    color: white;  /* AJOUTÉ */
 }
 
 /* ===== INPUT GROUP ===== */
 .input-group {
     position: relative;
     margin-bottom: 1.2rem;
+    color: white;  /* AJOUTÉ */
 }
 
 .input-icon {
@@ -678,7 +720,7 @@ h3 {
     left: 14px;
     top: 50%;
     transform: translateY(-50%);
-    color: var(--gray);
+    color: rgba(255, 255, 255, 0.7);  /* MODIFIÉ */
 }
 
 .input-with-icon {
@@ -715,7 +757,7 @@ h3 {
 .tooltip .tooltip-text {
     visibility: hidden;
     width: 200px;
-    background-color: var(--dark);
+    background-color: rgba(0, 0, 0, 0.8);  /* MODIFIÉ */
     color: white;
     text-align: center;
     border-radius: 6px;
@@ -741,17 +783,17 @@ h3 {
 }
 
 ::-webkit-scrollbar-track {
-    background: var(--light-gray);
+    background: rgba(255, 255, 255, 0.1);  /* MODIFIÉ */
     border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--primary);
+    background: rgba(255, 255, 255, 0.3);  /* MODIFIÉ */
     border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--primary-dark);
+    background: rgba(255, 255, 255, 0.5);  /* MODIFIÉ */
 }
 
 /* ===== PRINT STYLES ===== */
@@ -773,4 +815,23 @@ h3 {
         border: 1px solid #ddd !important;
         page-break-inside: avoid;
     }
+}
+
+/* ===== AJOUTS POUR LE TEXTE BLANC ===== */
+p, span, div, label, small, li {
+    color: white;  /* Texte blanc par défaut sur fond bleu */
+}
+
+/* Texte légèrement transparent pour les éléments secondaires */
+.text-muted, .subtitle, .note-date, .note-meta {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* Liens */
+a {
+    color: #87cefa;  /* Bleu clair pour les liens (reste lisible) */
+}
+
+a:hover {
+    color: #b0e0e6;
 }
