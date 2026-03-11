@@ -487,29 +487,41 @@ if __name__ == '__main__':
     print("🚀 CHALLENGE - SECURENOTES PRO")
     print("="*60)
     
-    # Initialisation
-    if init_database():
+    # Créer le contexte d'application
+    with app.app_context():
+        # FORCER LA RÉINITIALISATION COMPLÈTE
+        print("🔄 RÉINITIALISATION FORCÉE DE LA BASE DE DONNÉES...")
+        
+        # Supprimer toutes les tables existantes
+        db.drop_all()
+        print("   ✓ Anciennes tables supprimées")
+        
+        # Créer les nouvelles tables
+        db.create_all()
+        print("   ✓ Nouvelles tables créées")
+        
+        # Initialiser avec les données
+        print("   ✓ Initialisation des données...")
+        init_database()
+        
         # Vérification
-        if verify_challenge():
-            print(f"\n📌 ACCÈS AU CHALLENGE")
-            print(f"   URL: http://0.0.0.0:8081")
-            print(f"\n👥 COMPTES DE TEST:")
-            print(f"   • john:password123")
-            print(f"   • alice:alice2023")
-            print(f"\n🎯 OBJECTIF:")
-            print(f"   Trouver le flag dans la note 6")
-            print(f"   Le flag n'est visible QUE via l'API /api/note/6")
-            print(f"   Il est masqué dans l'interface web")
-            print(f"\n💡 INDICE:")
-            print(f"   L'API /api/note/<id> pourrait avoir une faille...")
-            print(f"\n⚠️  FAUSSES PISTES:")
-            print(f"   Des faux flags sont présents dans les notes 3, 8, 12")
-            print(f"   Les messages de sécurité dans l'interface sont trompeurs")
-            print("="*60 + "\n")
-            
-            # Démarrer le serveur
-            app.run(host='0.0.0.0', port=8081, debug=False)
-        else:
-            print("❌ Échec de la vérification du challenge")
-    else:
-        print("❌ Échec de l'initialisation de la base de données")
+        verify_challenge()
+    
+    print(f"\n📌 ACCÈS AU CHALLENGE")
+    print(f"   URL: http://0.0.0.0:8081")
+    print(f"\n👥 COMPTES DE TEST:")
+    print(f"   • john:password123")
+    print(f"   • alice:alice2023")
+    print(f"\n🎯 OBJECTIF:")
+    print(f"   Trouver le flag dans la note 6")
+    print(f"   Le flag n'est visible QUE via l'API /api/note/6")
+    print(f"   Il est masqué dans l'interface web")
+    print(f"\n💡 INDICE:")
+    print(f"   L'API /api/note/<id> pourrait avoir une faille...")
+    print(f"\n⚠️  FAUSSES PISTES:")
+    print(f"   Des faux flags sont présents dans les notes 3, 8, 12")
+    print(f"   Les messages de sécurité dans l'interface sont trompeurs")
+    print("="*60 + "\n")
+    
+    # Démarrer le serveur
+    app.run(host='0.0.0.0', port=8081, debug=False)
